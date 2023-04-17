@@ -6,7 +6,9 @@ A customizable chat bot component for React.
 
 Install using npm:
 
-`npm install @alexistoranzo/react-chat-bot` 
+`npm install @alexistoranzo/react-chat-bot`
+
+Note: Enabling React's strict mode may cause additional renders and potentially lead to issues in the package. It is recommended to avoid using strict mode with React Chat Bot.
 
 ## Usage
 
