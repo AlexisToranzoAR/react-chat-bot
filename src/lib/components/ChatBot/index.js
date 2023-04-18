@@ -28,9 +28,11 @@ export default function ChatBot(props) {
     botAvatar,
     userAvatar,
     onClose,
+    headerStyle,
     iconStyle,
     textStyle,
     buttonStyle,
+    language
   } = props;
 
   validateProps(props, {
@@ -40,9 +42,11 @@ export default function ChatBot(props) {
     botAvatar: { type: "component", required: true },
     userAvatar: { type: "component", required: true },
     onClose: { type: "function", required: false },
+    headerStyle: { type: "object", required: false },
     iconStyle: { type: "object", required: false },
     textStyle: { type: "object", required: false },
     buttonStyle: { type: "object", required: false },
+    language: { type: "string", required: true },
   });
 
   const [conversation, setConversation] = useState([
@@ -145,7 +149,7 @@ export default function ChatBot(props) {
 
   return (
     <Box sx={styles.container}>
-      <Header botName={botName} botAvatar={botAvatar} onClose={onClose} />
+      <Header {...{botName, botAvatar, onClose, headerStyle, language}} />
       <Conversation
         {...{
           conversation,
@@ -163,6 +167,8 @@ export default function ChatBot(props) {
           setUserResponse,
           disabled: !currentStep.user,
           handleUserResponse,
+          language,
+          botName
         }}
       />
     </Box>

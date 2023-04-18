@@ -1,5 +1,6 @@
 import { Box, ButtonBase, InputBase } from "@mui/material";
 import EnviarIcon from "./icons/Enviar";
+import dictionary from "../assets/dictionary.json"
 
 const styles = {
   container: {
@@ -19,7 +20,9 @@ export default function InputText({
   setUserResponse,
   disabled,
   handleUserResponse,
-  inputStyle
+  inputStyle,
+  language,
+  botName
 }) {
   const handleOnChange = (event) => {
     setUserResponse(event.target.value);
@@ -39,7 +42,7 @@ export default function InputText({
         type="text"
         sx={{...styles.input, ...inputStyle}}
         value={userResponse}
-        placeholder="Responder a Changuito..."
+        placeholder={`${dictionary[language].respondTo} ${botName}`}
         onChange={handleOnChange}
         disabled={disabled}
       />

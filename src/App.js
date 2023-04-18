@@ -96,6 +96,7 @@ function App() {
         botAvatar={<ChanguitoIcon />}
         userAvatar={<ChanguitoIcon />}
         nextStepNotFound={nextStepNotFound}
+        language="es"
       />
     </div>
   );

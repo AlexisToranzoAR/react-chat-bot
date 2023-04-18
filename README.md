@@ -71,6 +71,7 @@ function MyChatBot() {
       botName="My Bot"
       botAvatar={botAvatar}
       userAvatar={userAvatar}
+      language="en" // or "es"
     />
   );
 }
@@ -92,12 +93,15 @@ The `ChatBot` component accepts the following props:
         -   `trigger` (required): The ID of the next step to trigger when the user responds to this step.
     -   `user` (optional): If set to `true`, the bot will wait for the user to type a message before proceeding to the next step. The user's response will be stored in the `previousValue` variable.
     -   `end` (optional): If set to `true`, the conversation will end after this step.
+
 Note: At least one of `text`, `options`, or `user` properties is required for each step object. If a `trigger` property is not defined in a step object, the `end` property must be set to `true`. This is because the conversation flow cannot continue to the next step without a trigger. If neither `trigger` nor `end` is defined, the chat bot will throw an error.
 -   `nextStepNotFound` (optional): A function to call when the bot cannot find the next step to trigger. The function receives the current step id as its argument. 
 -   `botName` (required): The name of the bot to display in the chat window.
 -   `botAvatar` (required): A React component that displays the bot's avatar.
 -   `userAvatar` (required): A React component that displays the user's avatar.
+-   `language` (required): Set the language for the texts to be used.
 -   `onClose` (optional): A function to call when the user closes the chat window.
+-   `headerStyle` (optional): An object containing CSS styles to apply to the header.
 -   `iconStyle` (optional): An object containing CSS styles to apply to the chat avatar icon.
 -   `textStyle` (optional): An object containing CSS styles to apply to the chat text.
 -   `buttonStyle` (optional): An object containing CSS styles to apply to the chat buttons.
@@ -128,6 +132,7 @@ function MyChatBot() {
       botAvatar={botAvatar}
       userAvatar={userAvatar}
       nextStepNotFound={handleNextStepNotFound}
+      language="en"
     />
   );
 }
