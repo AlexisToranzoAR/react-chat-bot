@@ -28,6 +28,7 @@ export default function ChatBot(props) {
     botAvatar,
     userAvatar,
     onClose,
+    onFinish,
     headerStyle,
     iconStyle,
     textStyle,
@@ -42,6 +43,7 @@ export default function ChatBot(props) {
     botAvatar: { type: "component", required: true },
     userAvatar: { type: "component", required: true },
     onClose: { type: "function", required: false },
+    onFinish: { type: "function", required: false },
     headerStyle: { type: "object", required: false },
     iconStyle: { type: "object", required: false },
     textStyle: { type: "object", required: false },
@@ -116,6 +118,9 @@ export default function ChatBot(props) {
       setCurrentStep({ ...nextStep, sender: "bot" });
     } else {
       setConversation((prevState) => [...prevState, newMessage]);
+      if (onFinish) {
+        onFinish(newMessage);
+      }
     }
 
     setUserResponse("");

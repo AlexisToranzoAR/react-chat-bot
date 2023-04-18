@@ -49,7 +49,7 @@ export default function Message({
         {showAvatar && <>{sender === "bot" ? botAvatar : userAvatar}</>}
       </Box>
       <Box sx={{...styles.textContainer, ...textStyle}}>
-        <Typography sx={styles.text}>{text}</Typography>
+        <Typography variant="body2" sx={styles.text}>{text}</Typography>
       </Box>
     </Box>
   );

@@ -2,7 +2,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { cloneElement } from "react";
 import EnLineaIcon from "./icons/EnLinea";
-import dictionary from "../assets/dictionary.json"
+import dictionary from "../assets/dictionary.json";
 
 const styles = {
   container: {
@@ -33,9 +33,15 @@ const styles = {
   },
 };
 
-export default function Header({ botName, botAvatar, onClose, headerStyle, language }) {
+export default function Header({
+  botName,
+  botAvatar,
+  onClose,
+  headerStyle,
+  language,
+}) {
   return (
-    <Box sx={{...styles.container, ...headerStyle}}>
+    <Box sx={{ ...styles.container, ...headerStyle }}>
       <Box sx={styles.iconNameContainer}>
         <Box sx={styles.iconContainer}>
           {cloneElement(botAvatar, { width: "50", height: "50" })}
@@ -44,7 +50,9 @@ export default function Header({ botName, botAvatar, onClose, headerStyle, langu
           <Typography color="common.white">{botName}</Typography>
           <Box sx={styles.enLineaContainer}>
             <EnLineaIcon />
-            <Typography color="common.white">{dictionary[language].online}</Typography>
+            <Typography variant="body2" color="common.white">
+              {dictionary[language].online}
+            </Typography>
           </Box>
         </Box>
       </Box>

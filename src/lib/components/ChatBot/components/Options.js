@@ -55,7 +55,7 @@ export default function Options({
               })
             }
           >
-            <Typography>{option.label}</Typography>
+            <Typography variant="body2">{option.label}</Typography>
           </ButtonBase>
         ))}
       </Box>

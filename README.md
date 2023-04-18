@@ -100,7 +100,8 @@ Note: At least one of `text`, `options`, or `user` properties is required for ea
 -   `botAvatar` (required): A React component that displays the bot's avatar.
 -   `userAvatar` (required): A React component that displays the user's avatar.
 -   `language` (required): Set the language for the texts to be used.
--   `onClose` (optional): A function to call when the user closes the chat window.
+-   `onClose` (optional): A callback function to call when the user closes the chat window.
+-   `onFinish` (optional): A callback function to call when the chat is finished.
 -   `headerStyle` (optional): An object containing CSS styles to apply to the header.
 -   `iconStyle` (optional): An object containing CSS styles to apply to the chat avatar icon.
 -   `textStyle` (optional): An object containing CSS styles to apply to the chat text.
