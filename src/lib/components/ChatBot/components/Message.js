@@ -12,8 +12,10 @@ const styles = {
     },
   },
   iconContainer: {
-    minWidth: 56,
-    minHeight: 56,
+    width: "100%",
+    height: "100%",
+    maxWidth: 56,
+    maxHeight: 56,
   },
   textContainer: {
     display: "flex",

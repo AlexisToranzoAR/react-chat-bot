@@ -16,7 +16,9 @@ const styles = {
     borderRadius: "10px",
     py: 1.5,
     px: 2,
-    color: "#0B58A4",
+    "& p": {
+      color: "#0B58A4",
+    }
   },
   iconContainer: {
     minWidth: 56,

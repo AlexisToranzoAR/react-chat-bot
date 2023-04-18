@@ -89,7 +89,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div style={{maxHeight: 350}}>
       <ChatBot
         steps={steps}
         botName="Changuito"
