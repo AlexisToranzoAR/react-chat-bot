@@ -109,6 +109,8 @@ Note: At least one of `text`, `options`, or `user` properties is required for ea
 
 The `nextStepNotFound` prop is an optional function that is called when the chat bot cannot find the next step to trigger. If this prop is defined, the function will receive as its argument the ID of the step that could not be found. Additionally, you can define the argument as an `async` function that returns an object of the `step` that was not found. This can be useful if you want to log the missing steps or fetch the steps from a server.
 
+The `onFinish` prop is an optional function that gets called when the chatbot conversation is finished. If defined, the function will receive the last step as an argument.
+
 Here is an example of how to define the `nextStepNotFound` function:
 
 ```

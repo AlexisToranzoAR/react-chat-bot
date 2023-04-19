@@ -33,7 +33,7 @@ export default function ChatBot(props) {
     iconStyle,
     textStyle,
     buttonStyle,
-    language
+    language,
   } = props;
 
   validateProps(props, {
@@ -78,7 +78,7 @@ export default function ChatBot(props) {
     } else if (type === "option") {
       newMessage = { ...newMessage, text: option.label };
       trigger = option.trigger;
-      
+
       const conversationCurrentStepIndex = getConversationIndex(
         conversation,
         currentStep.id
@@ -129,20 +129,24 @@ export default function ChatBot(props) {
   // Si el paso actual es de tipo mensaje para al siguiente en caso de que sea posible
   async function goNextIfText(currentStep) {
     if (currentStep.text) {
-      if (!currentStep.end) {
-        const trigger = currentStep.trigger;
-        const nextStep = await getStepDataByTrigger(
-          steps,
-          trigger,
-          nextStepNotFound
-        );
+      const trigger = currentStep.trigger;
+      const nextStep = await getStepDataByTrigger(
+        steps,
+        trigger,
+        nextStepNotFound
+      );
 
+      if (!currentStep.end) {
         if (!isDuplicateEntry(conversation, nextStep)) {
           setConversation((prevState) => [
             ...prevState,
             { ...nextStep, sender: "bot" },
           ]);
           setCurrentStep({ ...nextStep, sender: "bot" });
+        }
+      } else {
+        if (onFinish) {
+          onFinish({ ...nextStep, sender: "bot" });
         }
       }
     }
@@ -154,7 +158,7 @@ export default function ChatBot(props) {
 
   return (
     <Box sx={styles.container}>
-      <Header {...{botName, botAvatar, onClose, headerStyle, language}} />
+      <Header {...{ botName, botAvatar, onClose, headerStyle, language }} />
       <Conversation
         {...{
           conversation,
@@ -173,7 +177,7 @@ export default function ChatBot(props) {
           disabled: !currentStep.user,
           handleUserResponse,
           language,
-          botName
+          botName,
         }}
       />
     </Box>
