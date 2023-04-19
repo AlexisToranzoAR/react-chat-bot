@@ -119,7 +119,10 @@ export default function ChatBot(props) {
     } else {
       setConversation((prevState) => [...prevState, newMessage]);
       if (onFinish) {
-        onFinish(newMessage);
+        onFinish([
+          ...conversation,
+          newMessage,
+        ]);
       }
     }
 
@@ -146,7 +149,7 @@ export default function ChatBot(props) {
         }
       } else {
         if (onFinish) {
-          onFinish({ ...nextStep, sender: "bot" });
+          onFinish(conversation);
         }
       }
     }

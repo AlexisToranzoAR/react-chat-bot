@@ -66,7 +66,7 @@ const steps = [
   {
     id: "9",
     text: "Lo siento, no estoy seguro de cómo ayudarte con eso. Comunicarse al 0800-555-2929",
-    trigger: "10",
+    trigger: "11",
   },
   {
     id: "10",
@@ -96,7 +96,7 @@ function App() {
         botAvatar={<ChanguitoIcon />}
         userAvatar={<ChanguitoIcon />}
         nextStepNotFound={nextStepNotFound}
-        onFinish={() => console.log("Termino")}
+        onFinish={(step) => console.log("Termino: ", step)}
         language="es"
       />
     </div>
