@@ -102,6 +102,9 @@ Note: At least one of `text`, `options`, or `user` properties is required for ea
 -   `language` (required): Set the language for the texts to be used.
 -   `onClose` (optional): A callback function to call when the user closes the chat window.
 -   `onFinish` (optional): A callback function to call when the chat is finished.
+-   `delay` (optional): This feature allows you to set a time interval (in milliseconds) between messages. By default, if no value is specified, the delay is set to 1000ms. If the next message is not found, a callback function called nextStepNotFound is triggered, and the loading animation will be displayed for the duration of the delay. For example, if the delay is set to 1000ms, but the query takes only 100ms to process, the loading animation will still be displayed for 1000ms.
+-   `messageSound` (optional): This feature allows you to specify a sound that will play every time a new message appears in the chatbot.
+-   `containerStyle` (optional): An object containing CSS styles to apply to the main container.
 -   `headerStyle` (optional): An object containing CSS styles to apply to the header.
 -   `iconStyle` (optional): An object containing CSS styles to apply to the chat avatar icon.
 -   `textStyle` (optional): An object containing CSS styles to apply to the chat text.

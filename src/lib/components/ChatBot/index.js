@@ -29,6 +29,9 @@ export default function ChatBot(props) {
     userAvatar,
     onClose,
     onFinish,
+    delay,
+    messageSound,
+    containerStyle,
     headerStyle,
     iconStyle,
     textStyle,
@@ -44,6 +47,9 @@ export default function ChatBot(props) {
     userAvatar: { type: "component", required: true },
     onClose: { type: "function", required: false },
     onFinish: { type: "function", required: false },
+    delay: { type: "number", required: false },
+    messageSound: { type: "string", required: false },
+    containerStyle: { type: "object", required: false },
     headerStyle: { type: "object", required: false },
     iconStyle: { type: "object", required: false },
     textStyle: { type: "object", required: false },
@@ -59,11 +65,21 @@ export default function ChatBot(props) {
     sender: "bot",
   });
   const [userResponse, setUserResponse] = useState("");
+  const [isLoading, setIsLoading] = useState({
+    status: true,
+    sender: "bot",
+  });
+  const timeoutms = delay || 1000;
 
   const handleUserResponse = async ({ type, text, option }) => {
     let newMessage = { ...currentStep, sender: "user" };
     let trigger;
     let conversationState = [...conversation];
+    setIsLoading({
+      status: true,
+      sender: "user",
+    });
+    const comienzo = Date.now();
 
     // Solo se guarda el label de la opcion en el array de conversacion
     if (type === "text") {
@@ -108,21 +124,42 @@ export default function ChatBot(props) {
           const isValid = currentStep.validator(newMessage.text);
           if (isValid !== true) {
             // Handle error de validacion
+            setIsLoading({ status: false, sender: "user" });
             return;
           }
         }
         setUserResponse("");
       }
 
-      setConversation([...conversationState, { ...nextStep, sender: "bot" }]);
-      setCurrentStep({ ...nextStep, sender: "bot" });
+      const fin = Date.now();
+
+      // Si es un step de input del usuario no hay delay
+      const delay = nextStep.user
+        ? 0
+        : Math.max(timeoutms - (comienzo - fin), 0);
+
+      setTimeout(() => {
+        setConversation([...conversationState]);
+        setIsLoading({ status: true, sender: "bot" });
+        setTimeout(() => {
+          setConversation([
+            ...conversationState,
+            { ...nextStep, sender: "bot" },
+          ]);
+          setCurrentStep({ ...nextStep, sender: "bot" });
+          setIsLoading({ status: false, sender: "bot" });
+        }, [timeoutms]);
+      }, delay);
     } else {
-      setConversation((prevState) => [...prevState, newMessage]);
+      // Si es un step de input del usuario no hay delay
+      const delay = newMessage.user ? 0 : timeoutms;
+
+      setTimeout(() => {
+        setConversation((prevState) => [...prevState, newMessage]);
+        setIsLoading({ status: false, sender: "bot" });
+      }, delay);
       if (onFinish) {
-        onFinish([
-          ...conversation,
-          newMessage,
-        ]);
+        onFinish([...conversation, newMessage]);
       }
     }
 
@@ -131,7 +168,10 @@ export default function ChatBot(props) {
 
   // Si el paso actual es de tipo mensaje para al siguiente en caso de que sea posible
   async function goNextIfText(currentStep) {
-    if (currentStep.text) {
+    if (currentStep.text && !currentStep.end) {
+      setIsLoading({ status: true, sender: "bot" });
+      const comienzo = Date.now();
+
       const trigger = currentStep.trigger;
       const nextStep = await getStepDataByTrigger(
         steps,
@@ -139,13 +179,22 @@ export default function ChatBot(props) {
         nextStepNotFound
       );
 
+      const fin = Date.now();
       if (!currentStep.end) {
         if (!isDuplicateEntry(conversation, nextStep)) {
-          setConversation((prevState) => [
-            ...prevState,
-            { ...nextStep, sender: "bot" },
-          ]);
-          setCurrentStep({ ...nextStep, sender: "bot" });
+          // Si es un step de input del usuario no hay delay
+          const delay = nextStep.user
+            ? 0
+            : Math.max(timeoutms - (comienzo - fin), 0);
+
+          setTimeout(() => {
+            setConversation((prevState) => [
+              ...prevState,
+              { ...nextStep, sender: "bot" },
+            ]);
+            setCurrentStep({ ...nextStep, sender: "bot" });
+            setIsLoading({ status: false, sender: "bot" });
+          }, delay);
         }
       } else {
         if (onFinish) {
@@ -160,24 +209,26 @@ export default function ChatBot(props) {
   }, [currentStep]);
 
   return (
-    <Box sx={styles.container}>
+    <Box sx={{ ...styles.container, ...containerStyle }}>
       <Header {...{ botName, botAvatar, onClose, headerStyle, language }} />
       <Conversation
         {...{
           conversation,
           handleUserResponse,
+          isLoading,
           botAvatar,
           userAvatar,
           iconStyle,
           textStyle,
           buttonStyle,
+          messageSound,
         }}
       />
       <InputText
         {...{
           userResponse,
           setUserResponse,
-          disabled: !currentStep.user,
+          disabled: !currentStep.user || isLoading.status,
           handleUserResponse,
           language,
           botName,

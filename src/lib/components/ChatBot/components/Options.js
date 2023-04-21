@@ -16,6 +16,7 @@ const styles = {
     borderRadius: "10px",
     py: 1.5,
     px: 2,
+    minWidth: 56,
     "& p": {
       color: "#0B58A4",
     }
@@ -30,6 +31,7 @@ export default function Options({
   options,
   sender,
   previousValue,
+  isLoading,
   botAvatar,
   userAvatar,
   handleUserResponse,

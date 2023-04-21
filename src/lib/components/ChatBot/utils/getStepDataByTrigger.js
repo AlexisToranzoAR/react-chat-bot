@@ -9,7 +9,7 @@ export default function getStepDataByTrigger(steps, trigger, handleNextStepNotFo
     if (handleNextStepNotFound) {
       return handleNextStepNotFound(trigger);
     } else {
-      throw new Error("No se encontro el paso siguiente con el id: " + trigger);
+      throw new Error(`The next step with the id ${trigger} was not found`);
     }
   }
 }

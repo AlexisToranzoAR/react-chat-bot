@@ -1,10 +1,10 @@
 export default function getStepData(steps, index) {
-  if (!steps.length) throw new Error("No hay steps");
+  if (!steps.length) throw new Error("There are no steps");
 
   const { id, text, user, options, trigger, end, validator } = steps[index];
 
-  if (!id) throw new Error("Id no definido");
-  if (!trigger && !options && !end) throw new Error("Trigger no definido");
+  if (!id) throw new Error("Undefined id");
+  if (!trigger && !options && !end) throw new Error("Undefined trigger");
 
   // Entra si solo una tiene contenido
   if (
@@ -22,6 +22,6 @@ export default function getStepData(steps, index) {
       validator,
     };
   } else {
-    throw new Error("Text, user o options solo se puede usar uno a la vez");
+    throw new Error("Text, user, or options can only be used one at a time");
   }
 }

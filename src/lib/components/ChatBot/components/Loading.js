@@ -1,4 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, keyframes } from "@mui/material";
+
+const pulse = keyframes`
+0% {
+  opacity: 0;
+}
+50% {
+  opacity: 1;
+}
+100% {
+  opacity: 0;
+}`;
 
 const styles = {
   container: {
@@ -26,18 +37,37 @@ const styles = {
     px: 2,
     minWidth: 0,
   },
-  text: {},
+  writing: {
+    "& span": {
+      display: "inline-block",
+      width: 8,
+      height: 8,
+      borderRadius: "50%",
+      backgroundColor: "#000",
+      marginRight: "4px",
+      animation: `${pulse} 1s infinite`,
+    },
+    "& span:nth-of-type(1)": {
+      marginLeft: "4px",
+    },
+    "& span:nth-of-type(2)": {
+      animationDelay: "0.1s",
+    },
+    "& span:nth-of-type(3)": {
+      animationDelay: "0.2s",
+    },
+  },
 };
 
-export default function Message({
-  text,
+export default function Loading({
+  conversation,
   sender,
-  previousValue,
   botAvatar,
   userAvatar,
   iconStyle,
   textStyle,
 }) {
+  const previousValue = conversation[conversation.length - 1];
   const showAvatar = previousValue ? sender !== previousValue.sender : true;
 
   return (
@@ -46,9 +76,11 @@ export default function Message({
         {showAvatar && <>{sender === "bot" ? botAvatar : userAvatar}</>}
       </Box>
       <Box sx={{ ...styles.textContainer, ...textStyle }}>
-        <Typography variant="body2" sx={styles.text}>
-          {text}
-        </Typography>
+        <Box sx={styles.writing}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </Box>
       </Box>
     </Box>
   );

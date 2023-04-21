@@ -12,6 +12,7 @@ const styles = {
     height: 40,
     width: "100%",
     border: "none",
+    typography: "body2"
   },
 };
 

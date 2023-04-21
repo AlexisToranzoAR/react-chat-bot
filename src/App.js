@@ -1,10 +1,16 @@
 import ChanguitoIcon from "./Changuito";
 import { ChatBot } from "./lib";
+import messageSound from "./sounds/message.mp3"
 
 const steps = [
   {
+    id: "0",
+    text: "Hola!",
+    trigger: "1",
+  },
+  {
     id: "1",
-    text: "¡Hola! ¿Cuál es tu nombre?",
+    text: "¿Cuál es tu nombre?",
     trigger: "2",
   },
   {
@@ -98,6 +104,7 @@ function App() {
         nextStepNotFound={nextStepNotFound}
         onFinish={(step) => console.log("Termino: ", step)}
         language="es"
+        messageSound={messageSound}
       />
     </div>
   );
